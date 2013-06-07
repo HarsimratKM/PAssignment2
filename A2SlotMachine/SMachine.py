@@ -63,6 +63,14 @@ def spin(player_cash, jackpot, Bet):
         elif line_Reel.count("Seven") == 2:
             winnings,win = Bet*20,True
     
+    elif line_Reel.count("Seven") == 1:
+            winnings, win = Bet*10,True
+            
+    else:
+            winnings, win = Bet*2,True
+    if win:    
+        print(Fruits + "\n" + "You Won $ " + str(int(winnings)) + " !!! \n")
+        player_cash += int(winnings)
 
 def Reels():
     """ When this function is called it determines the Bet_Line results.
@@ -188,57 +196,12 @@ def main():
     pygame.display.set_caption("Slot Machine")
     
     #create background
-    background = pygame.image.load("Images/slot-machine.gif")
-
+    background = pygame.image.load("images/slot-machine.gif")
     
-    # Flag to initiate the game loop
-    KeepGoing = True
+    #create images
+    reel1 = pygame.image.load("Images/spin.gif")
+    reel2 = pygame.image.load("Images/spin.gif")
+    reel3 = pygame.image.load("Images/spin.gif")
     
-    while KeepGoing == True:
-        win = 0
-        # Give the player some money if he goes broke
-        if Player_Money <1:
-            input("You have no more money. Here is $500 \nPress Enter\n")
-            Player_Money = 500
-        
-        # User Input
-        Prompt = raw_input(" Place Your Bet ! \n Jackpot $ " + str(Jack_Pot) + "\n Money $ " + str(Player_Money) + "\n Q = quit \n")
-        if Prompt  == "q" or Prompt  == "Q":
-            KeepGoing = False
-            break
-        
-        if Prompt == "" and Turn >1:
-            Bet = Prev_Bet
-            print("Using Previous Bet")
-            if Bet > Player_Money:
-                print("Sorry, you only have $" + str(Player_Money) + " \n")
-            elif Bet <= Player_Money:
-                Turn +=1
-                Prev_Bet = Bet
-                Player_Money, Jack_Pot, win = pullthehandle(Bet, Player_Money, Jack_Pot)
-        
-        elif is_number(Prompt ):
-            Bet = int(Prompt )
-            # not enough money
-            if Bet > Player_Money:
-                print("Sorry, you only have $" + str(Player_Money) + " \n")
-                
-            # Let's Play
-            elif Bet <= Player_Money:
-                Turn +=1
-                Prev_Bet = Bet
-                Player_Money, Jack_Pot, win = pullthehandle(Bet, Player_Money, Jack_Pot)
-        
-        # determine win/loss ratio for debugging purposes
-        if win:
-            win_number += 1
-        else:
-            loss_number += 1
-        win_ratio = "{:.2%}".format(win_number / Turn)
-        print("Wins: " + str(win_number) + "\nLosses: " + str(loss_number) + "\nWin Ratio: " + win_ratio + "\n")           
-                
-    
-    #The End
-    print("- Program Terminated -")
     
 if __name__ == "__main__": main()
