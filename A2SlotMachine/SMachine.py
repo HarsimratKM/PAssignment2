@@ -15,7 +15,54 @@
 """
 
 # import statements
-import random
+import pygame, pygame.font, pygame.event, pygame.draw, string, random
+from pygame.locals import *
+pygame.init()
+pygame.mixer.init()
+
+#Supplied Code
+def spin(player_cash, jackpot, Bet):
+    player_cash -= Bet
+    jackpot += (int(Bet*.15)) # 15% of the player's bet goes to the jackpot
+    win = False
+    line_Reel = Reels()
+    Fruits = line_Reel[0] + " - " + line_Reel[1] + " - " + line_Reel[2]
+    winnings = 0
+    jackPot = False
+    
+     # Match 3
+    if line_Reel.count("Grapes") == 3:
+        winnings,win = Bet*20,True
+    elif line_Reel.count("Lime") == 3:
+        winnings,win = Bet*30,True
+    elif line_Reel.count("Orange") == 3:
+        winnings,win = Bet*40,True
+    elif line_Reel.count("Cherry") == 3:
+        winnings,win = Bet*100,True
+    elif line_Reel.count("Bar") == 3:
+        winnings,win = Bet*200,True
+    elif line_Reel.count("Bell") == 3:
+        winnings,win = Bet*300,True
+    elif line_Reel.count("Seven") == 3:
+        print("Lucky Seven!!!")
+        winnings,win = Bet*1000,True
+    # Match 2
+    elif line_Reel.count("Blank") == 0:
+        if line_Reel.count("Grapes") == 2:
+            winnings,win = Bet*2,True
+        if line_Reel.count("Lime") == 2:
+            winnings,win = Bet*2,True
+        elif line_Reel.count("Orange") == 2:
+            winnings,win = Bet*3,True
+        elif line_Reel.count("Cherry") == 2:
+            winnings,win = Bet*4,True
+        elif line_Reel.count("Bar") == 2:
+            winnings,win = Bet*5,True
+        elif line_Reel.count("Bell") == 2:
+            winnings,win = Bet*10,True
+        elif line_Reel.count("Seven") == 2:
+            winnings,win = Bet*20,True
+    
 
 def Reels():
     """ When this function is called it determines the Bet_Line results.
@@ -136,6 +183,13 @@ def main():
     Prev_Bet=0
     win_number = 0
     loss_number = 0
+    
+    screen = pygame.display.set_mode((406, 407))
+    pygame.display.set_caption("Slot Machine")
+    
+    #create background
+    background = pygame.image.load("Images/slot-machine.gif")
+
     
     # Flag to initiate the game loop
     KeepGoing = True
