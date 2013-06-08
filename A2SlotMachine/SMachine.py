@@ -30,7 +30,7 @@ def spin(player_cash, jackpot, Bet):
     winnings = 0
     jackPot = False
     
-     # Match 3
+    # Match 3
     if line_Reel.count("Grapes") == 3:
         winnings,win = Bet*20,True
     elif line_Reel.count("Lime") == 3:
@@ -103,15 +103,21 @@ def Reels():
 
     
     return Bet_Line
+def increaseBet(bet, player_cash):
+    if(player_cash <= bet):
+        return player_cash
+    else:
+        if(bet == 100):
+            return bet
+        else:
+            return bet + 1
 
-def is_number(Bet):
-    """ This function Checks if the Bet entered by the user is a valid number """
-    try:
-        int(Bet)
-        return True
-    except ValueError:
-        print("Please enter a valid number or Q to quit")
-        return False
+def decreaseBet(bet):
+    if(bet == 0):
+        return bet
+    else:
+        return bet - 1
+
 
 def pullthehandle(Bet, Player_Money, Jack_Pot):
     """ This function takes the Player's Bet, Player's Money and Current JackPot as inputs.
@@ -192,16 +198,24 @@ def main():
     win_number = 0
     loss_number = 0
     
-    screen = pygame.display.set_mode((406, 407))
-    pygame.display.set_caption("Slot Machine")
-    
+    screen = pygame.display.set_mode((406, 407))    
     #create background
     background = pygame.image.load("images/slot-machine.gif")
     
     #create images
-    reel1 = pygame.image.load("Images/spin.gif")
-    reel2 = pygame.image.load("Images/spin.gif")
-    reel3 = pygame.image.load("Images/spin.gif")
+    reel1 = pygame.image.load("images/spin.gif")
+    reel2 = pygame.image.load("images/spin.gif")
+    reel3 = pygame.image.load("images/spin.gif")
+    
+    enoughCredits = True
+    #create sound
+    startup = pygame.mixer.Sound("Sounds/machine.wav")
+    startup.play()
+    #Render
+    screen.blit(background, (0, 0))
+    screen.blit(reel1, (65,155))
+    screen.blit(reel2, (170,155))
+    screen.blit(reel3, (275,155))
     
     
 if __name__ == "__main__": main()
